@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "next": "14.0.4",
+    "peerjs": "^1.5.2",
     "react": "^18",
     "react-dom": "^18",
     "socket.io": "^4.7.4",

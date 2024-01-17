@@ -20,6 +20,7 @@ export const SocketProvider = (props) => {
     setSocket(connection);
   }, []);
 //to make connection to servers side , as we are using next.js api so we need to fetch api
+//THIS IS ALSO DUE TO NEXT.JS SERVER IN FRONTEND
   socket?.on('connect_error', async (err) => {
     console.log("Error establishing socket", err)
     await fetch('/api/socket')
