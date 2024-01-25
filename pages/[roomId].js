@@ -4,9 +4,8 @@ import usePeer from "@/hooks/usePeer";
 
 const Room =()=>{
     const socket = useSocket();
-     const {peer,myId}
-    = usePeer()
-    console.log(myId)
+     const {peer,myId}= usePeer()
+    
 }
 
 export default Room;
