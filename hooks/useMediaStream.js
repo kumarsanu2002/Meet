@@ -15,7 +15,8 @@ const useMediaStream = () =>{
      (async function initStream(){
         try{
         //getting audio and video acess
-        const stream = await navigator.mediaDevices.getDisplayMedia({
+        //getuserMedia for camera and audio and getDisplaymedia for screen share
+        const stream = await navigator.mediaDevices.getUserMedia({
             audio:true,
             video:true
         })
