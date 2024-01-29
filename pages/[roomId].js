@@ -7,12 +7,15 @@ import useMediaStream from "@/hooks/useMediaStream";
 import Player from "@/component/Player";
 import { startTransition, useEffect } from "react";
 import usePlayer from "@/hooks/usePlayer";
+import styles from '@/styles/room.module.css'
+
+
 
 const Room =()=>{
     const socket = useSocket();
     const {peer,myId}= usePeer()
     const {stream} = useMediaStream()
-    const {players,setPlayers} = usePlayer()
+    const {players,setPlayers,playerHighlited,nonHighitedPlayer} = usePlayer(myId)
     //whenever i join a room and if someone join a room i should do something
     //and that something is to make call and get their  streams
 
@@ -97,18 +100,25 @@ if(!stream || !myId ) return;
 
 
 
-
-  
-
  /*showing video or stream which we got access to */
     return(
-         <div>
-             {Object.keys(players).map((playersId)=>{
-                 const {url,muted,playing} = players[playersId]
-             return  <Player key={playersId} url ={url} muted={muted} playing ={playing}/> 
+         <>
+         <div className={styles.activePlayerContainer}>
+            {playerHighlited && ( <Player key={playerHighlited.playersId} 
+            url ={playerHighlited.url}
+             muted={playerHighlited.muted} 
+             playing ={playerHighlited.playing}
+             isActive
+             /> )}
+         </div>
+         <div className={styles.inActivePlayerContainer}>
+             {Object.keys(nonHighitedPlayer).map((playersId)=>{
+                 const {url,muted,playing} = nonHighitedPlayer[playersId]
+             return  <Player key={playersId} url ={url} muted={muted} playing ={playing} isActive={false}/> 
             
              })}
-         </div> 
+         </div>
+         </> 
     )
 }
 
