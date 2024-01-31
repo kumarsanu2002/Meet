@@ -8,7 +8,7 @@ import styles from '@/component/Player/index.module.css'
 
 
 const Player =(props)=>{
-       const {url,muted,playing,isActive} = props
+       const {url,muted,playing,isActive} = props;
 
       return(
         //use this package npm i classname --> basically this library append many classed into single div.

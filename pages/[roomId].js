@@ -8,14 +8,16 @@ import Player from "@/component/Player";
 import { startTransition, useEffect } from "react";
 import usePlayer from "@/hooks/usePlayer";
 import styles from '@/styles/room.module.css'
-
+import { useRouter } from "next/router";
+import Bottom from "@/component/Bottom";
 
 
 const Room =()=>{
     const socket = useSocket();
     const {peer,myId}= usePeer()
     const {stream} = useMediaStream()
-    const {players,setPlayers,playerHighlited,nonHighitedPlayer} = usePlayer(myId)
+    const {roomId} = useRouter().query
+    const {players,setPlayers,playerHighlited,nonHighitedPlayer,toggleAudio,toggleVideo} = usePlayer(myId,roomId)
     //whenever i join a room and if someone join a room i should do something
     //and that something is to make call and get their  streams
 
@@ -75,14 +77,6 @@ useEffect(()=>{
 },[peer,stream,setPlayers])
 
 
-
-
-
-
-
-
-
-
 //get stream and set it to player hook which we created in hook
 useEffect(()=>{
 if(!stream || !myId ) return;
@@ -97,13 +91,11 @@ if(!stream || !myId ) return;
  }))
 },[myId,stream,setPlayers])
 
-
-
-
  /*showing video or stream which we got access to */
     return(
          <>
          <div className={styles.activePlayerContainer}>
+         {/*playerHighlited is from usePlayer.js -->hooks */}
             {playerHighlited && ( <Player key={playerHighlited.playersId} 
             url ={playerHighlited.url}
              muted={playerHighlited.muted} 
@@ -118,6 +110,12 @@ if(!stream || !myId ) return;
             
              })}
          </div>
+        {/* control pannel */}
+         <Bottom muted={playerHighlited?.muted} 
+           playing={playerHighlited?.playing}
+           toggleAudio={toggleAudio}
+           toggleVideo={toggleVideo}
+         />
          </> 
     )
 }

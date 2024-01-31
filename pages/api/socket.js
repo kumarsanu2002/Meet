@@ -22,7 +22,16 @@ const SocketHandler = (req, res) => {
                //we will listen this in client side
                 socket.broadcast.to(roomId).emit('user-connected',userId)
             }) 
-
+     //WHEN SOME ONE TOOGLES THEIR AUDIO AND VIDEO THEN WHAT WE NEED TODO
+     socket.on('user-toggle-audio', (userId, roomId) => {
+        socket.join(roomId)
+        socket.broadcast.to(roomId).emit('user-toggle-audio', userId)
+    })
+      //for video
+      socket.on('user-toggle-video',(userId,roomId)=>{
+        socket.join(roomId)
+        socket.broadcast.to(roomId).emit('user-toggle-video',userId)
+      })
         })
     }
     res.end();
